@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<div class="Menu_Heading_Wrapper">
+  <h3 class="Menu_Heading">Menus Available</h3>
+  <%= link_to 'New Menu', new_menu_path,{ :class=>"Menu_Button"} %>
+</div>
+<section class="Menu_Section_Wrapper">
+  <% @menus.each do |menu| %>
+    <%= link_to menu, class: "Menu_Card_Link" do %>
+      <div class="Menu_Card">
+        <%= image_tag(menu.thumbnail, :class =>"Menu_Card_Image")%>
+        <h6 class = "Menu_Card_Title"><%= menu.name %></h6>
+      </div>
+    <% end %>
+  <% end %>
+</section>
+<br>
