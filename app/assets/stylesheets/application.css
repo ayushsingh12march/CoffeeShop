@@ -13,11 +13,23 @@
  *= require_tree .
  *= require_self
  */
+
+/*
+ *= require font-awesome
+ */
+
+:root {
+  --bg1: #eee0cb;
+  --bg2: #fffacc;
+  --text-primary: #5a464c;
+  --text-secondary: #53131e;
+  --blue: #0c2d82;
+}
 * {
   font-family: "Lato", sans-serif !important;
 }
 body {
-  background-color: #eae9e1;
+  background-color: var(--bg1);
 }
 
 .field {
@@ -41,4 +53,5 @@ body {
 
 .field > input[type="file"] {
   box-shadow: none;
+  width: initial;
 }

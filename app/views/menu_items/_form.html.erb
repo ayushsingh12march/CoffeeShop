@@ -12,8 +12,7 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :menu_id %>
-    <%= form.number_field :menu_id %>
+    <%= form.hidden_field :menu_id, value: menu_id%>
   </div>
 
   <div class="field">
@@ -29,6 +28,10 @@
   <div class="field">
     <%= form.label :price %>
     <%= form.text_field :price %>
+  </div>
+  <div class="field">
+    <%= form.label :image, "Choose an Image for your Menu" %>
+    <%= form.file_field :image %>
   </div>
 
   <div class="actions">

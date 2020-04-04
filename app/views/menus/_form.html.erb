@@ -13,20 +13,16 @@
   <% end %>
 
   <div class="field">
-    <%= form.number_field :id, placeholder: "Menu ID" %>
-  </div>
-
-  <div class="field">
     <%= form.text_field :name, placeholder: "Menu Name"%>
   </div>
 
    <div class="field">
-    <%= form.label :image %>
+    <%= form.label :image, "Choose an Image for your Menu" %>
     <%= form.file_field :image %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Add Menu", :class => "Menu_New_Submit_Btn"%>
   </div>
 <% end %>
 </div>

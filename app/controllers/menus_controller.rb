@@ -5,11 +5,13 @@ class MenusController < ApplicationController
   # GET /menus.json
   def index
     @menus = Menu.all
+    @menu = Menu.new
   end
 
   # GET /menus/1
   # GET /menus/1.json
   def show
+    @dishes = MenuItem.where("menu_id = ?", params[:id])
   end
 
   # GET /menus/new
@@ -28,7 +30,7 @@ class MenusController < ApplicationController
 
     respond_to do |format|
       if @menu.save
-        format.html { redirect_to @menu, notice: "Menu was successfully created." }
+        format.html { redirect_to menus_url, notice: { :message => "Menu was successfully created." } }
         format.json { render :show, status: :created, location: @menu }
       else
         format.html { render :new }
@@ -70,6 +72,6 @@ class MenusController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def menu_params
-    params.require(:menu).permit(:id, :name, :image)
+    params.require(:menu).permit(:name, :image)
   end
 end
