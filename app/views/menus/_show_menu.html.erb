@@ -9,9 +9,7 @@
         <div class="Menu_Details">
           <h2 class="Menu_Detail_Title" id = "menu_heading"><%= @menu.name %></h2>
           <div>
-            <% if @menu.active == true %>
-              <%= link_to "Mark As Inactive", menu_activate_path(@menu), method: :post, :class => "Menu_Edit_Btn"%>
-            <% else %>
+            <% if @menu.active == false %>
               <%= link_to "Mark As Active", menu_activate_path(@menu) ,method: :post, :class => "Menu_Edit_Btn"%>
             <% end %>
             <%= link_to "Edit", edit_menu_path(@menu) , :class => "Menu_Edit_Btn"%>

@@ -21,6 +21,12 @@ class MenusController < ApplicationController
   end
 
   def activate
+    already_active_menu = Menu.where("active = ?", true).limit(1)
+
+    if already_active_menu.length > 0
+      already_active_menu[0].active = false
+      already_active_menu[0].save
+    end
     menu = Menu.find(params[:menu_id])
     menu.active = !(menu.active)
     menu.save
