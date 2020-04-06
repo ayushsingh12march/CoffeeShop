@@ -20,9 +20,18 @@
     <%= form.label :image, "Choose an Image for your Menu" %>
     <%= form.file_field :image %>
   </div>
-
-  <div class="actions">
-    <%= form.submit "Add Menu", :class => "Menu_New_Submit_Btn"%>
-  </div>
+  <% if edit == true %>
+    <div class="actions">
+      <%= form.submit "Edit Menu", :class => "Menu_New_Submit_Btn"%>
+      <%= link_to "Back", menu_path(menu), :class => "Menu_Button"%>
+      <%= link_to menu, method: :delete, data: { confirm: 'Are you sure?' }, class: "Delete_Btn"  do %>
+        <%= image_tag("trash.png") %> Delete
+      <%end%>
+    </div>
+  <% else %>
+    <div class="actions">
+      <%= form.submit "New Menu", :class => "Menu_New_Submit_Btn"%>
+    </div>
+  <%end%>
 <% end %>
 </div>

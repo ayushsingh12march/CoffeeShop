@@ -1,11 +1,11 @@
-<p id="notice"><%= notice %></p>
+<%= render :partial => "available_menus", :locals => {active: @active}%>
 
 <div class="Menu_Heading_Wrapper">
   <h3 class="Menu_Heading">Menus Available</h3>
   <button class="Menu_Button" id= "create_menu">New Menu</button>
 </div>
 <div class="Menu_Create_Wrapper" id="create-menu-form">
-  <%= render 'form', menu: @menu %>
+  <%= render :partial => 'form', :locals => {menu: @menu , edit: false} %>
 </div>
 <section class="Menu_Section_Wrapper">
   <% @menus.each do |menu| %>

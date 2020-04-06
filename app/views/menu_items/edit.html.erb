@@ -1,6 +1,1 @@
-<h1>Editing Menu Item</h1>
-
-<%= render 'form', menu_item: @menu_item %>
-
-<%= link_to 'Show', @menu_item %> |
-<%= link_to 'Back', menu_items_path %>
+<%= render :partial => 'show_dish', :locals => {menu_item: @menu_item, edit: true } %>

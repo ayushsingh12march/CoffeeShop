@@ -12,6 +12,11 @@
   </head>
 
   <body>
+    <% if notice %>
+      <div id="notice-wrapper">
+        <p id="notice"><%= notice %></p>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>

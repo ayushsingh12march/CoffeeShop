@@ -6,6 +6,7 @@ class MenusController < ApplicationController
   def index
     @menus = Menu.all
     @menu = Menu.new
+    @active = Menu.where("active = ?", true)
   end
 
   # GET /menus/1
@@ -19,8 +20,18 @@ class MenusController < ApplicationController
     @menu = Menu.new
   end
 
+  def activate
+    menu = Menu.find(params[:menu_id])
+    menu.active = !(menu.active)
+    menu.save
+    respond_to do |format|
+      format.html { redirect_to menus_url, notice: "Menu was successfully updated." }
+    end
+  end
+
   # GET /menus/1/edit
   def edit
+    @dishes = MenuItem.where("menu_id = ?", params[:id])
   end
 
   # POST /menus

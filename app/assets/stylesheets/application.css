@@ -39,7 +39,7 @@ body {
 }
 
 .field > input {
-  width: 90%;
+  width: 70%;
   padding: 10px 15px;
   margin: 10px 0;
   border-radius: 10px;
@@ -54,4 +54,22 @@ body {
 .field > input[type="file"] {
   box-shadow: none;
   width: initial;
+}
+
+a:hover,
+a:active {
+  background-color: brown;
+}
+
+#notice-wrapper {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 1.5rem 0;
+  text-align: center;
+  background-color: rgba(0, 128, 0, 0.603);
+  z-index: 999;
+  font-weight: 800;
+  color: white;
+  letter-spacing: 1px;
 }
