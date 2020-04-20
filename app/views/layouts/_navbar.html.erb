@@ -6,7 +6,7 @@
 
   <div class="links-section">
     <a href="/about">About Us</a>
-    <a href="/branches">Our Branches</a>
+    <%= link_to "Order online", dishes_path%>
     <% if current_user %>
       <%= link_to "Logout", logout_path %>
     <% else %>

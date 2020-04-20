@@ -1,0 +1,6 @@
+<div>
+  <h4>Today's available menu <%= @menu.name %> </h4>
+  <% @dishes.each do |dish| %>
+    <p><%= dish.name %></p>
+  <% end %>
+</div>

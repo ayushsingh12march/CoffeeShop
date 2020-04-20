@@ -1,6 +1,6 @@
 class MenusController < ApplicationController
   before_action :set_menu, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate
   # GET /menus
   # GET /menus.json
   def index
@@ -90,5 +90,15 @@ class MenusController < ApplicationController
   # Only allow a list of trusted parameters through.
   def menu_params
     params.require(:menu).permit(:name, :image, :active)
+  end
+
+  def authenticate
+    if current_user
+      if current_user.role != "User"
+        redirect_to root_url
+      end
+    else
+      redirect_to login_path
+    end
   end
 end
