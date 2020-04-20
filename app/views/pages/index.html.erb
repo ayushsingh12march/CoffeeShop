@@ -1,0 +1,9 @@
+<h1>Pages#index</h1>
+<p>Find me in app/views/pages/index.html.erb</p>
+<% if current_user %>
+  <%= link_to "Log out", logout_path %>
+  <%= current_user.email %>
+<%else%>
+<%= link_to "Login", login_path%>
+<%= link_to "SignUp", signup_path%>
+<% end %>
