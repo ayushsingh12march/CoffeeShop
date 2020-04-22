@@ -29,3 +29,7 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# Ignore ruby version,postgresql password to avoid conflicts while working on same repo with diff versions
+.ruby-version
+database.yml
