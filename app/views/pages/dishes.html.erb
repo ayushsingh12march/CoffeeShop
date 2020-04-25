@@ -1,6 +1,39 @@
 <div>
   <h4>Today's available menu <%= @menu.name %> </h4>
+  <details >
+    <summary class = "Cart-heading">Your cart :- <%= pluralize @cart.size, 'item' %> </summary>
+    <ul class="Cart-list">
+      <% @cart.each do |item| %>
+        <li>Dish : <%= item["dish_name"] %> , Quantity : <%= item["quantity"]%> - <%= link_to 'remove',remove_from_cart_path(item["dish_id"]), method: :delete%></li>
+      <% end %>
+    </ul>
+  </details>
+<section class="Dish-card">
   <% @dishes.each do |dish| %>
-    <p><%= dish.name %></p>
-  <% end %>
+    <div class="Dish-details">
+      <%= image_tag(dish.thumbnail, :class=>"Dish-img") %>
+      <h6>Dish : <%= dish.name %></h6>
+      <h6>Price : <%= dish.price %> Rs.</h6>
+      <%= form_tag add_to_cart_path do %>
+        <%= hidden_field_tag :dish_name,dish.name%>
+        <%= hidden_field_tag :dish_price,dish.price%>
+        <%= hidden_field_tag :dish_id, dish.id %>
+        <h6>Quantity
+          <%= number_field_tag :quantity, 1 , :class=>"Dish-quantity"%>
+        </h6>
+        <% found = 0%>
+        <%  @cart.each do |item|%>
+          <% if item["dish_id"] == dish.id%>
+            <% found =1%>
+          <% end %>
+        <%end%>
+        <% if found == 1%>
+          <p>Added to cart</p>
+        <% else %>
+          <%= submit_tag "Add to Cart" ,class: "Dish-addToCart"%>
+        <%end%>
+      <%end%>
+    </div>
+  <%end%>
+</section>
 </div>

@@ -11,5 +11,8 @@ Rails.application.routes.draw do
   get "login", to: "sessions#new", as: "login"
   get "logout", to: "sessions#destroy", as: "logout"
   get "dishes", to: "pages#dishes", as: "dishes"
+
+  post "pages/add_to_cart", to: "pages#add_to_cart", as: "add_to_cart"
+  delete "pages/remove_from_cart", to: "pages#remove_from_cart", as: "remove_from_cart"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
