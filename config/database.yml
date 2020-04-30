@@ -25,7 +25,7 @@ development:
   <<: *default
   host: localhost
   user: postgres
-  password: changeme
+  password: postgres
   database: coffee_shop
 
   # The specified database role being used to connect to postgres.

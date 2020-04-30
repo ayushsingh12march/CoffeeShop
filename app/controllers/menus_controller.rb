@@ -47,6 +47,10 @@ class MenusController < ApplicationController
 
     respond_to do |format|
       if @menu.save
+        if Menu.count() == 1
+          @menu.active = true
+          @menu.save
+        end
         format.html { redirect_to menus_url, notice: { :message => "Menu was successfully created." } }
         format.json { render :show, status: :created, location: @menu }
       else
@@ -94,7 +98,7 @@ class MenusController < ApplicationController
 
   def authenticate
     if current_user
-      if current_user.role != "User"
+      if current_user.role != "Admin"
         redirect_to root_url
       end
     else

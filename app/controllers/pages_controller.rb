@@ -6,8 +6,13 @@ class PagesController < ApplicationController
 
   def dishes
     @menu = Menu.where("active = ?", true)[0]
-    @dishes = MenuItem.where("menu_id = ?", @menu.id)
-    @cart = session[:cart]
+    if @menu
+      @dishes = MenuItem.where("menu_id = ?", @menu.id)
+      @cart = session[:cart]
+    else
+      @dishes = nil
+      @cart = nil
+    end
   end
 
   def add_to_cart
