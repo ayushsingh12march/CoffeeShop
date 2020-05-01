@@ -16,11 +16,7 @@ class PagesController < ApplicationController
   end
 
   def add_to_cart
-    # session[:cart] << (params[:dish_id],params[:quantity])
-    # redirect_to(action: "dishes")
     update_cart(params[:dish_id].to_i, params[:quantity].to_i, params[:dish_name], params[:dish_price].to_f)
-    # dish_Id = params[:dish_id].to_i   # It is not converted to integer
-    # session[:cart] << { dish_Id => params[:quantity].to_i }
     redirect_to(action: "dishes")
   end
 
