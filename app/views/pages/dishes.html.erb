@@ -9,30 +9,44 @@
       <% end %>
     </ul>
   </details>
-    <section class="Dish-card">
+    <section class="Dish-section">
       <% @dishes.each do |dish| %>
-        <div class="Dish-details">
-          <%= image_tag(dish.thumbnail, :class=>"Dish-img") %>
-          <h6>Dish : <%= dish.name %></h6>
-          <h6>Price : <%= dish.price %> Rs.</h6>
-          <%= form_tag add_to_cart_path do %>
-            <%= hidden_field_tag :dish_name,dish.name%>
-            <%= hidden_field_tag :dish_price,dish.price%>
-            <%= hidden_field_tag :dish_id, dish.id %>
-            <h6>Quantity
-              <%= number_field_tag :quantity, 1 , :class=>"Dish-quantity"%>
-            </h6>
-            <% found = 0%>
-            <%  @cart.each do |item|%>
-              <% if item["dish_id"] == dish.id%>
-                <% found =1%>
-              <% end %>
-            <%end%>
-            <% if found == 1%>
-              <p>Added to cart</p>
-            <% else %>
-              <%= submit_tag "Add to Cart" ,class: "Dish-addToCart"%>
-            <%end%>
+        <div class="Dish-card">
+          <%= image_tag(dish.picture, :class=>"Dish-img") %>
+          <h6 class="Dish-name"><%= dish.name %></h6>
+          <div class="Dish-details">
+            <div class="Dish-price">
+              <%= image_tag("cash.svg", :class => "Menu_Cash_Icon") %>
+              Rs. <%= dish.price %>
+            </div>
+            <h6 class="Dish-description"><%= dish.description %></h6>
+            <%= form_tag add_to_cart_path do %>
+              <%= hidden_field_tag :dish_name,dish.name%>
+              <%= hidden_field_tag :dish_price,dish.price%>
+              <%= hidden_field_tag :dish_id, dish.id %>
+              <div class="Dish-description"><strong>Quantity</strong>
+                <%= number_field_tag :quantity, 1 ,min:1, :class=>"Dish-quantity"%>
+              </div>
+              <% found = 0%>
+              <%  @cart.each do |item|%>
+                <% if item["dish_id"] == dish.id%>
+                  <% found =1%>
+                <% end %>
+              <%end%>
+              <% if found == 1%>
+                <div class="Dish-addedToCart">
+                  <p>ADDED</p>
+                  <%= image_tag("tick.svg", :class => "Menu_Cash_Icon") %>
+                </div>
+              <% else %>
+
+                <%= button_tag(type: "submit",class: "Dish-addToCart") do%>
+                  ADD TO CART
+                   <%= image_tag("cart.svg", :class => "Menu_Cash_Icon") %>
+                <%end%>
+
+              <%end%>
+            </div>
           <%end%>
         </div>
       <%end%>
