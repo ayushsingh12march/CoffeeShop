@@ -71,7 +71,9 @@ strong{
   border-radius: 10%;
 
 }
-
+.Dish-card:hover .Dish-name{
+  margin-bottom: 0px;
+}
 .Dish-card:hover > .Dish-details{
   display:block;
 
