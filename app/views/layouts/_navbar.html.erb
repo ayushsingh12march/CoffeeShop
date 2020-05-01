@@ -5,8 +5,12 @@
   <% end %>
 
   <div class="links-section">
-    <a href="/about">About Us</a>
+    <%= link_to "About Us", root_url%>
     <%= link_to "Order online", dishes_path%>
+    <% if is_admin %>
+      <%= link_to "Menus", menus_path %>
+      <%= link_to "Users", users_path %>
+    <% end %>
     <% if current_user %>
       <%= link_to "Logout", logout_path %>
     <% else %>

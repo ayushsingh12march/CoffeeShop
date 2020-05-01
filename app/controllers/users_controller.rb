@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
+  before_action :allow_admin, only: [:newuser, :create_user]
   # GET /users
   # GET /users.json
   def index
@@ -31,6 +31,26 @@ class UsersController < ApplicationController
         session[:user_id] = @user.id
         format.html do
           redirect_to root_url, notice: "Signup Success"
+        end
+        # format.json { render :show, status: :created, location: @user }
+      else
+        format.html { render :new }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def newuser
+    @user = User.new
+  end
+
+  def create_user
+    @user = User.new(user_params)
+
+    respond_to do |format|
+      if @user.save
+        format.html do
+          redirect_to users_path, notice: "Signup Success"
         end
         # format.json { render :show, status: :created, location: @user }
       else
@@ -74,5 +94,11 @@ class UsersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def user_params
     params.require(:user).permit(:email, :password, :password_confirmation, :role)
+  end
+
+  def allow_admin
+    if !is_admin
+      redirect_to root_url
+    end
   end
 end
