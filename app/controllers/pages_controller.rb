@@ -9,6 +9,10 @@ class PagesController < ApplicationController
     if @menu
       @dishes = MenuItem.where("menu_id = ?", @menu.id)
       @cart = session[:cart]
+      @total = 0
+      session[:cart].each do |o|
+        @total = @total + o["dish_price"] * o["quantity"]
+      end
     else
       @dishes = nil
       @cart = nil
