@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
-  before_action :authenticate, except: [:createorder]
+  require "net/http"
+  before_action :authenticate, except: [:createorder, :get_invoice]
 
   def index
     @page = params.fetch(:page, 0).to_i || 0
@@ -20,6 +21,7 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
+    @order_items = OrderItem.where("order_id = ?", @order.id)
   end
 
   def createorder
@@ -61,6 +63,54 @@ class OrdersController < ApplicationController
       format.html { redirect_to orders_url, notice: "Order was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def get_invoice
+    baseInvoice = {
+      "logo" => "https://static.vecteezy.com/system/resources/thumbnails/000/565/921/small/04152019-37.jpg",
+      "from" => "The Coffee Shop
+  SASTRA Deemed to be University
+  Thanjavur, TN 600013",
+      "payment_terms" => "Auto-Billed - Do Not Pay",
+      "notes" => "Thanks for being an awesome customer!",
+      "terms" => "No need to submit payment. You will be auto-billed for this invoice.",
+    }
+    uri = URI("https://invoice-generator.com")
+    to = current_user.name
+    order = Order.find(params[:id])
+    order_items = OrderItem.where("order_id = ?", order.id)
+    items = order_items.map { |item|
+      {
+        "name" => item.menu_item.name,
+        "quantity" => item.quantity,
+        "unit_cost" => item.menu_item.price,
+      }
+    }
+
+    parameter = baseInvoice.merge({
+      "to" => to,
+      "currency" => "INR",
+      "number" => order.id,
+      "date" => Time.at(order.created_at).strftime("%b %-d, %Y"),
+      "items" => items,
+      "fields" => {
+        "tax" => false,
+      },
+      "tax" => 18,
+    })
+    req = Net::HTTP::Post.new uri
+    req["Content-Type"] = "application/json"
+    req.body = parameter.to_json
+
+    res = Net::HTTP.start(uri.host, uri.port, :use_ssl => true) do |http|
+      http.request req
+    end
+    # respond_to do |format|
+    #   format.pdf do
+    #     send_data res.body, filename: "#{params[:id]}.pdf"
+    #   end
+    # end
+    send_data res.body, filename: "#{params[:id]}.pdf"
   end
 
   private

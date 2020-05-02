@@ -117,3 +117,90 @@ td {
   flex-direction: column;
   align-items: center;
 }
+
+/* Order-details  */
+
+.order-details-wrapper {
+  width: 70%;
+  margin: 10vh auto;
+}
+
+.order-detail-card {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 5rem;
+}
+
+.order-title-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.order-title-section > h4 {
+  color: brown;
+  font-weight: 900;
+}
+
+.order-detail-card > p {
+  color: black;
+  font-style: italic;
+  margin: 30px 0;
+}
+
+.order-items-list {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.order-items-list thead {
+  font-weight: bold;
+}
+
+.order-items-list table,
+.order-items-list td,
+.order-items-list th,
+.order-items-list tr {
+  border: 1px solid rgb(27, 26, 26);
+  text-align: center;
+}
+
+.order-items-list > table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.order-items-list > th,
+tr td {
+  padding: 15px;
+}
+
+.order-grand-total {
+  text-align: right;
+  margin: 30px 0;
+}
+
+.order-grand-total > span {
+  font-size: 24px;
+  color: brown;
+  font-weight: 900;
+}
+
+.download-invoice {
+  padding: 12px;
+  border: 2px solid slateblue;
+  color: slateblue;
+  width: 60%;
+  margin: 10vh auto 0 auto;
+  display: block;
+  text-align: center;
+  border-radius: 10px;
+  font-weight: 900;
+  transition: 0.3s ease-in;
+}
+
+.download-invoice:hover,
+.download-invoice:active {
+  color: white !important;
+  background-color: slateblue;
+}

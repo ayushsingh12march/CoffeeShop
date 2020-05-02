@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   post "createuser", to: "users#create_user", as: "admin_create_user"
   post "completeorder", to: "orders#mark_as_complete", as: "complete_order"
 
+  get "invoice", to: "orders#get_invoice", as: "invoice"
+
   post "checkout", to: "orders#createorder", as: "checkout"
   post "pages/add_to_cart", to: "pages#add_to_cart", as: "add_to_cart"
   delete "pages/remove_from_cart", to: "pages#remove_from_cart", as: "remove_from_cart"
