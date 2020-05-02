@@ -1,18 +1,38 @@
 <div>
 <% if @dishes && @menu %>
-  <h4>Today's available menu <%= @menu.name %> </h4>
-  <details>
-    <summary class = "Cart-heading">Your cart :- <%= pluralize @cart.size, 'item' %> </summary>
-    <ul class="Cart-list">
-      <% @cart.each do |item| %>
-        <li>Dish : <%= item["dish_name"] %> , Quantity : <%= item["quantity"]%> - <%= link_to 'remove',remove_from_cart_path(item["dish_id"]), method: :delete%></li>
-      <% end %>
-    </ul>
-    <div>
-      <b>Total cost :- <%= @total %>.Rs</b>
-    </div>
-    <%= link_to "Checkout", checkout_path, method: :post, data: { confirm: 'Are you sure?' }%>
-  </details>
+  <div class="Menu-Cart">
+    <h4 class="Menu-heading">MENU TODAY : <%= @menu.name %> </h4>
+    <details class="Cart">
+      <summary class = "Cart-heading">SHOPPING BASKET  : <%= pluralize @cart.size, 'item' %><%= image_tag("cart.svg", :class => "Menu_Cash_Icon") %></summary>
+      <table class="Cart-list">
+        <thead>
+          <tr>
+            <th>DISH</th>
+            <th>Quantity</th>
+            <th>REMOVE</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @cart.each do |item| %>
+          <tr class="Cart-row">
+            <td><%= item["dish_name"] %></td>
+            <td><%= item["quantity"]%></td>
+            <td>
+              <%= link_to remove_from_cart_path(item["dish_id"]), method: :delete do%>
+                <%= image_tag("trash.png", :class => "Menu_Cash_Icon")%>
+              <% end %>
+            </td>
+
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <div class="Cart-total">
+        <b>Total : <%= @total %>.Rs</b>
+      </div><br>
+      <%= link_to "Checkout", checkout_path, method: :post,class: "Cart-checkout", data: { confirm: 'Are you sure?' }%>
+    </details>
+  </div>
     <section class="Dish-section">
       <% @dishes.each do |dish| %>
         <div class="Dish-card">
@@ -28,14 +48,16 @@
               <%= hidden_field_tag :dish_name,dish.name%>
               <%= hidden_field_tag :dish_price,dish.price%>
               <%= hidden_field_tag :dish_id, dish.id %>
-              <div class="Dish-description"><strong>Quantity</strong>
-                <%= number_field_tag :quantity, 1 ,min:1, :class=>"Dish-quantity"%>
-              </div>
               <% found = 0%>
               <%  @cart.each do |item|%>
                 <% if item["dish_id"] == dish.id%>
                   <% found =1%>
                 <% end %>
+              <%end%>
+              <%if found==0%>
+                <div class="Dish-description"><strong>Quantity</strong>
+                  <%= number_field_tag :quantity, 1 ,min:1, :class=>"Dish-quantity"%>
+                </div>
               <%end%>
               <% if found == 1%>
                 <div class="Dish-addedToCart">
