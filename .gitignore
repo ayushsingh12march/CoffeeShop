@@ -32,4 +32,4 @@ yarn-debug.log*
 
 # Ignore ruby version,postgresql password to avoid conflicts while working on same repo with diff versions
 .ruby-version
-database.yml
+/config/database.yml

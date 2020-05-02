@@ -9,6 +9,10 @@ class PagesController < ApplicationController
     if @menu
       @dishes = MenuItem.where("menu_id = ?", @menu.id)
       @cart = session[:cart]
+      @total = 0
+      session[:cart].each do |o|
+        @total = @total + o["dish_price"] * o["quantity"]
+      end
     else
       @dishes = nil
       @cart = nil
@@ -16,11 +20,7 @@ class PagesController < ApplicationController
   end
 
   def add_to_cart
-    # session[:cart] << (params[:dish_id],params[:quantity])
-    # redirect_to(action: "dishes")
     update_cart(params[:dish_id].to_i, params[:quantity].to_i, params[:dish_name], params[:dish_price].to_f)
-    # dish_Id = params[:dish_id].to_i   # It is not converted to integer
-    # session[:cart] << { dish_Id => params[:quantity].to_i }
     redirect_to(action: "dishes")
   end
 

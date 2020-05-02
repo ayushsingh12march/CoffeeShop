@@ -1,0 +1,40 @@
+<div class="user-list-title-wrapper">
+  <h4 class="users-list-title">Orders</h4>
+</div>
+<div class="user-list-table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>User </th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <% if order.user.role == "Admin" || order.user.role == "Biller" %>
+            <td>Walk-in Customer</td>
+          <% else %>
+            <td><%= order.user.email %></td>
+          <% end %>
+          <td><%= order.total %></td>
+          <td>
+            <span class="order_status">
+              <%= order["status"] %>
+            </span>
+          </td>
+          <td>
+            <%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% if @page != 0 %>
+    <%= link_to "Previous Page", orders_path(page: @page - 1)%>
+  <% end %>
+  <%= link_to "Next Page", orders_path(page: @page + 1)%>
+</div>
+<br>

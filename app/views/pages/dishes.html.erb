@@ -1,13 +1,17 @@
 <div>
 <% if @dishes && @menu %>
   <h4>Today's available menu <%= @menu.name %> </h4>
-  <details >
+  <details>
     <summary class = "Cart-heading">Your cart :- <%= pluralize @cart.size, 'item' %> </summary>
     <ul class="Cart-list">
       <% @cart.each do |item| %>
         <li>Dish : <%= item["dish_name"] %> , Quantity : <%= item["quantity"]%> - <%= link_to 'remove',remove_from_cart_path(item["dish_id"]), method: :delete%></li>
       <% end %>
     </ul>
+    <div>
+      <b>Total cost :- <%= @total %>.Rs</b>
+    </div>
+    <%= link_to "Checkout", checkout_path, method: :post, data: { confirm: 'Are you sure?' }%>
   </details>
     <section class="Dish-section">
       <% @dishes.each do |dish| %>
