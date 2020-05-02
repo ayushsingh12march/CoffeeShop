@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create, :destroy, :index]
   resources :sessions, only: [:new, :create, :destroy]
   resources :menu_items
-  resources :orders, only: [:index, :update]
+  resources :orders, only: [:index, :update, :destroy]
   resources :menus do
     post "/activate", :to => "menus#activate", :as => "activate"
   end
@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get "dishes", to: "pages#dishes", as: "dishes"
   get "createuser", to: "users#newuser", as: "admin_new_user"
   post "createuser", to: "users#create_user", as: "admin_create_user"
+  post "completeorder", to: "orders#mark_as_complete", as: "complete_order"
 
   post "checkout", to: "orders#createorder", as: "checkout"
   post "pages/add_to_cart", to: "pages#add_to_cart", as: "add_to_cart"

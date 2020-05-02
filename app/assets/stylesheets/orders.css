@@ -1,0 +1,28 @@
+.order-wrapper {
+  display: flex;
+}
+
+.orders-filters {
+  min-width: 25vw;
+  max-height: 40vh;
+  margin: 10vh auto;
+  padding: 10vh 2vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.order_status {
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.red {
+  background-color: rgba(209, 0, 0, 0.808);
+}
+
+.green {
+  background-color: rgba(59, 209, 0, 0.794);
+}
