@@ -24,54 +24,7 @@
     </div>
   </div>
   <div class="order-list-table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th># ID </th>
-          <th>User </th>
-          <th>Total</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @orders.each do |order| %>
-          <tr>
-            <td><%= link_to order do%> <%= order.id%><%end%></td>
-            <% if order.user.role == "Admin" || order.user.role == "Biller" %>
-              <td>Walk-in Customer</td>
-            <% else %>
-              <td><%= order.user.name %></td>
-            <% end %>
-            <td><%= order.total %></td>
-            <td>
-              <% if order["status"] == "Completed"%>
-                <span class="order_status green">
-                  <%= order["status"] %>
-                </span>
-              <% else %>
-                <span class="order_status red">
-                  <%= order["status"] %>
-                </span>
-              <% end %>
-            </td>
-            <td class="order-actions">
-              <% if is_admin %>
-                <%= form_tag(order,{:method => :delete, data: {confirm: "Are you sure? "}}) do %>
-                  <%= image_submit_tag("trash.png")%>
-                <% end %>
-              <% end %>
-              <% if order["status"] != "Completed" %>
-                <%= link_to complete_order_path(id: order[:id]), method: :post  do %>
-                  <%= image_tag("tick.svg") %> Mark as Complete
-                <% end %>
-              <% end %>
-            </td>
-          </tr>
-
-        <% end %>
-      </tbody>
-    </table>
+    <%= render :partial => "orders_table", :locals => {orders: @orders, my_orders: false}%>
     <div class="pagination">
       <% if @page != 0 %>
         <%= link_to "Previous Page", orders_path(page: @page - 1)%>

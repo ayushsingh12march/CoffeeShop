@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   require "net/http"
-  before_action :authenticate, except: [:createorder, :get_invoice]
+  before_action :authenticate, except: [:createorder, :get_invoice, :my_orders, :show]
 
   def index
     @page = params.fetch(:page, 0).to_i || 0
@@ -63,6 +63,10 @@ class OrdersController < ApplicationController
       format.html { redirect_to orders_url, notice: "Order was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def my_orders
+    @orders = Order.where("user_id = ?", params[:id])
   end
 
   def get_invoice

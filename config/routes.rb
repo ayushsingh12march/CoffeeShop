@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   post "completeorder", to: "orders#mark_as_complete", as: "complete_order"
 
   get "invoice", to: "orders#get_invoice", as: "invoice"
+  get "myorders", to: "orders#my_orders", as: "my_orders"
 
   post "checkout", to: "orders#createorder", as: "checkout"
   post "pages/add_to_cart", to: "pages#add_to_cart", as: "add_to_cart"
