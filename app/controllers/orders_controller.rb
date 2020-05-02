@@ -1,11 +1,11 @@
 class OrdersController < ApplicationController
-  before_action :authenticate
+  before_action :authenticate, except: [:createorder]
 
   def index
     @page = params.fetch(:page, 0).to_i || 0
-    @orders = Order.all.order(created_at: :desc).offset(@page).limit(15)
+    @orders = Order.all.order(created_at: :desc).offset(@page * 8).limit(8)
     if params.has_key?("today")
-      @orders = @orders.created_before(Time.zone.now)
+      @orders = @orders.in_range(Time.zone.yesterday, Time.zone.now)
     end
     if params.has_key?("user") && params["user"].to_i > 0
       @orders = @orders.with_user(params[:user])
@@ -16,6 +16,10 @@ class OrdersController < ApplicationController
     if params.has_key?("pending")
       @orders = @orders.only_pending
     end
+  end
+
+  def show
+    @order = Order.find(params[:id])
   end
 
   def createorder

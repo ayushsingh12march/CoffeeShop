@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create, :destroy, :index]
   resources :sessions, only: [:new, :create, :destroy]
   resources :menu_items
-  resources :orders, only: [:index, :update, :destroy]
+  resources :orders, only: [:index, :update, :destroy, :show]
   resources :menus do
     post "/activate", :to => "menus#activate", :as => "activate"
   end

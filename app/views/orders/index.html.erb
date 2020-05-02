@@ -2,25 +2,32 @@
   <h4 class="users-list-title">Orders</h4>
 </div>
 <div class="order-wrapper">
-  <div class = "orders-filters">
-    <%= link_to "Today's Orders", orders_path(today: true)%>
-    <% if is_admin %>
-      <div>
-        <%= form_tag({},{:method => :get}) do %>
-          <%= number_field_tag 'user', nil, min: 1 %>
-          <%= submit_tag "Search by User"%>
-        <% end %>
-      </div>
-    <% end %>
-    <%= link_to "Completed", orders_path(completed: true) %>
-    <%= link_to "Pending", orders_path(pending: true) %>
-    <%= link_to "All", orders_path %>
+  <div class="order-filter-wrapper">
+    <div class = "orders-filters">
+      <h5>Filters</h5>
+      <hr class="horizontal-line"/>
+      <%= link_to "Today's Orders", orders_path(today: true)%>
+      <%= link_to "All", orders_path %>
+      <%= link_to "Completed", orders_path(completed: true) %>
+      <%= link_to "Pending", orders_path(pending: true) %>
+      <% if is_admin %>
 
+        <h5>Search</h5>
+        <hr class="horizontal-line" />
+        <div>
+          <%= form_tag({},{:method => :get, :class=>"search-by-user"}) do %>
+            <%= number_field_tag 'user', nil, min: 1, placeholder: "@user_id eg: 14" %>
+            <%= submit_tag "Search by User"%>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
-  <div class="user-list-table-wrapper">
+  <div class="order-list-table-wrapper">
     <table>
       <thead>
         <tr>
+          <th># ID </th>
           <th>User </th>
           <th>Total</th>
           <th>Status</th>
@@ -30,10 +37,11 @@
       <tbody>
         <% @orders.each do |order| %>
           <tr>
+            <td><%= link_to order do%> <%= order.id%><%end%></td>
             <% if order.user.role == "Admin" || order.user.role == "Biller" %>
               <td>Walk-in Customer</td>
             <% else %>
-              <td><%= order.user.email %></td>
+              <td><%= order.user.name %></td>
             <% end %>
             <td><%= order.total %></td>
             <td>
@@ -47,21 +55,30 @@
                 </span>
               <% end %>
             </td>
-            <td>
-              <%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <td class="order-actions">
+              <% if is_admin %>
+                <%= form_tag(order,{:method => :delete, data: {confirm: "Are you sure? "}}) do %>
+                  <%= image_submit_tag("trash.png")%>
+                <% end %>
+              <% end %>
               <% if order["status"] != "Completed" %>
-                <%= link_to 'Mark as Complete', complete_order_path(id: order[:id]), method: :post %>
+                <%= link_to complete_order_path(id: order[:id]), method: :post  do %>
+                  <%= image_tag("tick.svg") %> Mark as Complete
+                <% end %>
               <% end %>
             </td>
           </tr>
+
         <% end %>
       </tbody>
     </table>
-    <% if @page != 0 %>
-      <%= link_to "Previous Page", orders_path(page: @page - 1)%>
-    <% end %>
-    <%= link_to "Next Page", orders_path(page: @page + 1)%>
+    <div class="pagination">
+      <% if @page != 0 %>
+        <%= link_to "Previous Page", orders_path(page: @page - 1)%>
+      <% end %>
+      <% if (@page+1) * 8 <= Order.count %>
+       <%= link_to "Next Page", orders_path(page: @page + 1)%>
+      <% end %>
+    </div>
   </div>
 </div>
-
-<br>
