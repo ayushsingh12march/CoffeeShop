@@ -8,17 +8,18 @@
 require "faker"
 
 # roles = ["User", "Biller"]
-# 100.times do
+# 20.times do
 #   User.create(
 #     email: Faker::Internet.email,
-#     password: Faker::Internet.email,
+#     password: "test",
+#     name: Faker::Name.name,
 #     role: roles.sample,
 #   )
-# end
+# end 
 
 100.times do
   Order.create(
-    user_id: rand(1..101),
+    user_id: rand(104..120),
     status: "Pending",
     total: rand(1...1000),
   )
