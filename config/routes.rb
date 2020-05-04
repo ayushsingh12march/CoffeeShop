@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "dashboard/dash"
   root "pages#index"
   resources :users, only: [:new, :create, :destroy, :index]
   resources :sessions, only: [:new, :create, :destroy]
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
   get "createuser", to: "users#newuser", as: "admin_new_user"
   post "createuser", to: "users#create_user", as: "admin_create_user"
   post "completeorder", to: "orders#mark_as_complete", as: "complete_order"
+  get "dashboard", to: "dashboard#dash", as: "dashboard"
 
   get "invoice", to: "orders#get_invoice", as: "invoice"
   get "myorders", to: "orders#my_orders", as: "my_orders"
