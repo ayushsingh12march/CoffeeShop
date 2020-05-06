@@ -1,4 +1,6 @@
 class DashboardController < ApplicationController
+  before_action :authenticate
+
   def dash
     # dish_menu = OrderItem.group(:menu_item_id).count
     # menu_name = MenuItem.where("menu_id = ?", 2).pluck_to_hash(:id, :name)  ##{pass params from erb for menu_id}
@@ -29,5 +31,15 @@ class DashboardController < ApplicationController
   end
 
   def menu_dash
+  end
+
+  def authenticate
+    if current_user
+      if current_user.role != "Admin"
+        redirect_to root_url
+      end
+    else
+      redirect_to login_path
+    end
   end
 end
